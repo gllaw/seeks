@@ -1,0 +1,23 @@
+<% if flash[:errors] %>
+	<% flash[:errors].each do |e| %>
+		<p><%= e %></p>
+	<% end %>		
+<% end %>
+
+<h1>Edit user</h1>
+<form action="/users/<%= @user.id %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="_method" value="patch">
+  <p><label>Name</label></p>
+  <input id="Name" type="text" name="user[name]" value="<%= @user.name %>"><br>
+  <p><label>Email</label></p>
+  <input id="Email" type="text" name="user[email]" value="<%= @user.email %>"><br>
+  <p><input type="submit" value="Update"></p>
+</form>
+<form action="/users/<%= @user.id %>" method="post">
+	<input type="hidden" name="_method" value="delete">
+  	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  
+  	<p><input type="submit" value="Delete Account"></p>
+</form>
+<a data-method="delete" href="/users/<%= @user.id %>">Delete Account</a>

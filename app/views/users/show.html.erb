@@ -1,0 +1,31 @@
+<% if session[:user_id] %>
+<h1><%= @user.name %>'s Profile Page</h1>
+<% end %>
+
+<h2>Secrets</h2>
+<% if session[:user_id] %>
+	<% @secrets.each do |secret| %>
+		<p><%= secret.content %></p>
+		<form action="/secrets/<%= secret.id %>" method="post">
+		  <input type='hidden' name='_method' value='delete'>
+		  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+		  <input type='submit' value='Delete'>
+		</form>
+	<% end %>		
+<% end %>
+
+<h2>Add a new secret</h2>
+<form action="/secrets" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <input type="hidden" name="secret[user_id]" value="<%= session[:user_id] %>">
+  <input id="New Secret" type="text" name="secret[content]">
+  <input type="submit" value="Create Secret">
+</form>
+
+<p><a href="/users/<%= @user.id %>/edit">Edit Profile</a></p>
+
+<!-- <form action="/sessions/<%= @user.id %>" method="post">
+<input type="hidden" name="_method" value="delete">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+<p><input type="submit" value="Log Out"></p>
+</form> -->
